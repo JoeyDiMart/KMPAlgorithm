@@ -7,13 +7,14 @@ Program: KMP Algorithm
 
 def failureFunction(pattern):
     length = len(pattern)
-    table = [0] * len(pattern)  # Initialize table with zeros
+    table = [-1] * length
+    table[0] = 0
     i = 0
-    j = 0
+    j = 1
 
-    while i < length:
+    while j < length:
         if pattern[i] == pattern[j]:
-            table[j] = i + 1
+            table[j] = i+i
             i += 1
             j += 1
         elif i > 0:
@@ -32,9 +33,9 @@ def KMP(text, pattern):
     first_index = -1
     i = 0
     j = 0
-    while i < text_len-1:
-        print(i, j)
-        if text_len - i <= pattern_len - j:
+
+    while i < text_len:
+        if text_len - j <= pattern_len - i:
             if text[i] == pattern[j]:
                 first_index = i
                 return first_index
@@ -42,7 +43,7 @@ def KMP(text, pattern):
         if text[i] == pattern[j]:
             j += 1
             i += 1
-            if i == pattern_len:
+            if j == pattern_len:
                 first_index = i-j
                 return first_index
 
@@ -57,8 +58,7 @@ def KMP(text, pattern):
 
 text = input("Enter a text to search through: ")
 pattern = input("Enter a pattern you'd like to search for: ")
-
-KMP(text, pattern)
+print(KMP(text, pattern))
 
 
 
